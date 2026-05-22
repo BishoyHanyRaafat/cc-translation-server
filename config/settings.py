@@ -132,6 +132,10 @@ class Settings(BaseSettings):
     # ==================== Baseten Config ====================
     baseten_api_key: str = Field(default="", validation_alias="BASETEN_API_KEY")
 
+    # ==================== Cloudflare Config ====================
+    cloudflare_api_key: str = Field(default="", validation_alias="CLOUDFLARE_API_KEY")
+    cloudflare_account_id: str = Field(default="", validation_alias="CLOUDFLARE_ACCOUNT_ID")
+
 
     # ==================== Messaging Platform Selection ====================
     # Valid: "telegram" | "discord" | "none"
@@ -189,6 +193,7 @@ class Settings(BaseSettings):
     zai_proxy: str = Field(default="", validation_alias="ZAI_PROXY")
     fireworks_proxy: str = Field(default="", validation_alias="FIREWORKS_PROXY")
     baseten_proxy: str = Field(default="", validation_alias="BASETEN_PROXY")
+    cloudflare_proxy: str = Field(default="", validation_alias="CLOUDFLARE_PROXY")
 
 
     # ==================== Provider Rate Limiting ====================
