@@ -180,6 +180,15 @@ FIELDS: tuple[ConfigFieldSpec, ...] = (
         description="Baseten API key for custom-hosted OpenAI-compatible endpoints. Base URL is configured separately.",
     ),
     ConfigFieldSpec(
+        "MODELSCOPE_API_KEY",
+        "ModelScope API Key",
+        "providers",
+        "secret",
+        settings_attr="modelscope_api_key",
+        secret=True,
+        description="ModelScope API key for accessing models via api-inference.modelscope.ai.",
+    ),
+    ConfigFieldSpec(
         "CLOUDFLARE_API_KEY",
         "Cloudflare API Key",
         "providers",
@@ -203,6 +212,15 @@ FIELDS: tuple[ConfigFieldSpec, ...] = (
         settings_attr="zai_api_key",
         secret=True,
         description="Z.ai Coding Plan API key.",
+    ),
+    ConfigFieldSpec(
+        "OLLAMA_CLOUD_API_KEY",
+        "Ollama Cloud API Key",
+        "providers",
+        "secret",
+        settings_attr="ollama_cloud_api_key",
+        secret=True,
+        description="OLLAMA_CLOUD provider API key for Ollama Cloud users.",
     ),
     ConfigFieldSpec(
         "FIREWORKS_API_KEY",

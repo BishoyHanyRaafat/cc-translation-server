@@ -110,6 +110,18 @@ def _create_baseten(config: ProviderConfig, _settings: Settings) -> BaseProvider
     return BasetenProvider(config)
 
 
+def _create_modelscope(config: ProviderConfig, _settings: Settings) -> BaseProvider:
+    from providers.modelscope import ModelScopeProvider
+
+    return ModelScopeProvider(config)
+
+
+def _create_ollama_cloud(config: ProviderConfig, _settings: Settings) -> BaseProvider:
+    from providers.ollama_cloud import OllamaCloudProvider
+
+    return OllamaCloudProvider(config)
+
+
 def _create_cloudflare(config: ProviderConfig, settings: Settings) -> BaseProvider:
     from providers.cloudflare import CloudflareProvider
 
@@ -128,8 +140,10 @@ PROVIDER_FACTORIES: dict[str, ProviderFactory] = {
     "opencode": _create_opencode,
     "opencode_go": _create_opencode_go,
     "zai": _create_zai,
+    "ollama_cloud": _create_ollama_cloud,
     "fireworks": _create_fireworks,
     "baseten": _create_baseten,
+    "modelscope": _create_modelscope,
     "cloudflare": _create_cloudflare,
 }
 

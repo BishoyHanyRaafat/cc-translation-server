@@ -132,10 +132,17 @@ class Settings(BaseSettings):
     # ==================== Baseten Config ====================
     baseten_api_key: str = Field(default="", validation_alias="BASETEN_API_KEY")
 
+    # ==================== ModelScope Config ====================
+    modelscope_api_key: str = Field(default="", validation_alias="MODELSCOPE_API_KEY")
+
     # ==================== Cloudflare Config ====================
     cloudflare_api_key: str = Field(default="", validation_alias="CLOUDFLARE_API_KEY")
-    cloudflare_account_id: str = Field(default="", validation_alias="CLOUDFLARE_ACCOUNT_ID")
-
+    cloudflare_account_id: str = Field(
+        default="", validation_alias="CLOUDFLARE_ACCOUNT_ID"
+    )
+    ollama_cloud_api_key: str = Field(
+        default="", validation_alias="OLLAMA_CLOUD_API_KEY"
+    )
 
     # ==================== Messaging Platform Selection ====================
     # Valid: "telegram" | "discord" | "none"
@@ -193,8 +200,9 @@ class Settings(BaseSettings):
     zai_proxy: str = Field(default="", validation_alias="ZAI_PROXY")
     fireworks_proxy: str = Field(default="", validation_alias="FIREWORKS_PROXY")
     baseten_proxy: str = Field(default="", validation_alias="BASETEN_PROXY")
+    modelscope_proxy: str = Field(default="", validation_alias="MODELSCOPE_PROXY")
     cloudflare_proxy: str = Field(default="", validation_alias="CLOUDFLARE_PROXY")
-
+    ollama_cloud_proxy: str = Field(default="", validation_alias="OLLAMA_CLOUD_PROXY")
 
     # ==================== Provider Rate Limiting ====================
     provider_rate_limit: int = Field(default=40, validation_alias="PROVIDER_RATE_LIMIT")

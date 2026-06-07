@@ -28,7 +28,11 @@ OLLAMA_DEFAULT_BASE = "http://localhost:11434"
 OPENCODE_DEFAULT_BASE = "https://opencode.ai/zen/v1"
 OPENCODE_GO_DEFAULT_BASE = "https://opencode.ai/zen/go/v1"
 ZAI_DEFAULT_BASE = "https://api.z.ai/api/coding/paas/v4"
-CLOUDFLARE_DEFAULT_BASE = "https://api.cloudflare.com/client/v4/accounts/{account_id}/ai/v1"
+CLOUDFLARE_DEFAULT_BASE = (
+    "https://api.cloudflare.com/client/v4/accounts/{account_id}/ai/v1"
+)
+MODELSCOPE_DEFAULT_BASE = "https://api-inference.modelscope.ai/v1"
+OLLAMA_CLOUD_DEFAULT_BASE = "https://ollama.com"
 
 
 @dataclass(frozen=True, slots=True)
@@ -189,7 +193,26 @@ PROVIDER_CATALOG: dict[str, ProviderDescriptor] = {
         proxy_attr="baseten_proxy",
         capabilities=("chat", "streaming", "tools", "thinking", "rate_limit"),
     ),
-
+    "modelscope": ProviderDescriptor(
+        provider_id="modelscope",
+        transport_type="openai_chat",
+        credential_env="MODELSCOPE_API_KEY",
+        credential_url="https://modelscope.cn/user/myaccesstoken",  # Typical ModelScope token page
+        credential_attr="modelscope_api_key",
+        default_base_url=MODELSCOPE_DEFAULT_BASE,
+        proxy_attr="modelscope_proxy",
+        capabilities=("chat", "streaming", "tools", "thinking", "rate_limit"),
+    ),
+    "ollama_cloud": ProviderDescriptor(
+        provider_id="ollama_cloud",
+        transport_type="anthropic_messages",
+        credential_env="OLLAMA_CLOUD_API_KEY",
+        credential_url="https://ollama.com/settings/keys",
+        credential_attr="ollama_cloud_api_key",
+        default_base_url=OLLAMA_CLOUD_DEFAULT_BASE,
+        proxy_attr="ollama_cloud_proxy",
+        capabilities=("chat", "streaming", "tools", "thinking", "rate_limit"),
+    ),
 }
 
 # Order matches docs / historical error text; must match PROVIDER_CATALOG keys.
