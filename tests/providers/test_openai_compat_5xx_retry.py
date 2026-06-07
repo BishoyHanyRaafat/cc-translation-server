@@ -42,7 +42,7 @@ async def test_nim_stream_retries_on_openai_5xx_then_streams(status_code):
         mock_chunk.choices = [
             MagicMock(
                 delta=MagicMock(content="Hi", reasoning_content=""),
-                finish_reason=None,
+                finish_reason="stop",
             )
         ]
         mock_chunk.usage = None
@@ -106,7 +106,7 @@ async def test_nim_stream_openai_5xx_exhausted_emits_user_message(
             mock_create.side_effect = _internal_5xx(status_code)
             events = [e async for e in provider.stream_response(req)]
 
-        assert mock_create.await_count == 4
+        assert mock_create.await_count == 5
         blob = "".join(events)
         assert expect_substr in blob.lower()
     finally:

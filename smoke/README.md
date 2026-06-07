@@ -31,6 +31,15 @@ $env:FCC_LIVE_SMOKE = "1"
 uv run pytest smoke -n 0 -s --tb=short
 ```
 
+Provider smoke scenarios can run providers in parallel while preserving
+sequential execution within each provider:
+
+```powershell
+$env:FCC_LIVE_SMOKE = "1"
+$env:FCC_SMOKE_TARGETS = "providers"
+uv run pytest smoke -n auto --dist=loadgroup -s --tb=short
+```
+
 Provider product E2E runs once per configured provider, independent of `MODEL`,
 `MODEL_OPUS`, `MODEL_SONNET`, and `MODEL_HAIKU`. Defaults come from the provider
 catalog/docs and can be overridden with `FCC_SMOKE_MODEL_<PROVIDER>`, for example
@@ -100,7 +109,7 @@ uv run pytest smoke/product -n 0 -s --tb=short
 ```powershell
 $env:FCC_LIVE_SMOKE = "1"
 $env:FCC_SMOKE_TARGETS = "openrouter_free_cli"
-$env:FCC_SMOKE_OPENROUTER_FREE_MODELS = "nvidia/nemotron-3-super-120b-a12b:free,openai/gpt-oss-120b:free,minimax/minimax-m2.5:free,inclusionai/ring-2.6-1t:free,poolside/laguna-m.1:free"
+$env:FCC_SMOKE_OPENROUTER_FREE_MODELS = "nvidia/nemotron-3-super-120b-a12b:free,openai/gpt-oss-120b:free,poolside/laguna-m.1:free"
 uv run pytest smoke/product -n 0 -s --tb=short
 ```
 
@@ -118,7 +127,12 @@ uv run pytest smoke/product -n 0 -s --tb=short
 - `FCC_SMOKE_TARGETS`: comma-separated targets, or `all`.
 - `FCC_SMOKE_PROVIDER_MATRIX`: comma-separated provider prefixes to require.
 - `FCC_SMOKE_MODEL_NVIDIA_NIM`, `FCC_SMOKE_MODEL_OPEN_ROUTER`,
-  `FCC_SMOKE_MODEL_DEEPSEEK`, `FCC_SMOKE_MODEL_LMSTUDIO`,
+  `FCC_SMOKE_MODEL_MISTRAL`, `FCC_SMOKE_MODEL_MISTRAL_CODESTRAL`,
+  `FCC_SMOKE_MODEL_DEEPSEEK`, `FCC_SMOKE_MODEL_KIMI`,
+  `FCC_SMOKE_MODEL_WAFER`, `FCC_SMOKE_MODEL_OPENCODE`, `FCC_SMOKE_MODEL_OPENCODE_GO`,
+  `FCC_SMOKE_MODEL_ZAI`, `FCC_SMOKE_MODEL_FIREWORKS`,   `FCC_SMOKE_MODEL_GEMINI`,
+  `FCC_SMOKE_MODEL_GROQ`, `FCC_SMOKE_MODEL_CEREBRAS`,
+  `FCC_SMOKE_MODEL_LMSTUDIO`,
   `FCC_SMOKE_MODEL_LLAMACPP`, `FCC_SMOKE_MODEL_OLLAMA`: optional per-provider
   smoke model overrides. Values may include the provider prefix or just the model
   name for that provider.
@@ -149,10 +163,9 @@ locked.
 Smoke artifacts are written to `.smoke-results/` and redact env values whose
 names contain `KEY`, `TOKEN`, `SECRET`, `WEBHOOK`, or `AUTH`.
 
-- `missing_env`: required credentials, binary, provider config, local server, or
-  opt-in flag is absent.
-- `upstream_unavailable`: a real provider, bot API, or local model server is not
-  reachable.
+- `missing_env`: required credentials, binary, provider config, local provider
+  server/model, or opt-in flag is absent.
+- `upstream_unavailable`: a real provider or bot API is not reachable.
 - `probe_timeout`: the smoke driver reached the target, but the CLI/probe did
   not complete within the smoke timeout.
 - `product_failure`: the app accepted the scenario but returned the wrong shape,
